@@ -3,7 +3,9 @@ import conf
 import string
 from email.mime.text import MIMEText
 from email.header import Header
-import recivers
+from receivers import Contacts
+from morequest import Morequest
+
 
 
 
@@ -25,40 +27,50 @@ class Momail():
         self.subject = subject
         self.content = content
         self.type = type
-        self.message = MIMEText(self.content, self.type, 'utf-8')
-        self.message['From'] = Header('workmonitor', 'utf-8')
-        self.message['To'] = Header('optgroup', 'utf-8')
-        self.message['Subject'] = Header(self.subject, 'utf-8')
 
     def sendmail(self):
+        message = MIMEText(self.content, self.type, 'utf-8')
+        message['From'] = Header('workmonitor', 'utf-8')
+        message['To'] = Header('optgroup', 'utf-8')
+        message['Subject'] = Header(self.subject, 'utf-8')
         try:
             smtpObj = smtplib.SMTP()
             smtpObj.connect(self.host,self.port)
             smtpObj.starttls()
             smtpObj.login(self.user,self.password)
-            smtpObj.sendmail(self.sender,self.receivers,self.message.as_string())
+            smtpObj.sendmail(self.sender,self.receivers,message.as_string())
         except smtplib.SMTPException:
             print "Error: can not send email!"
 
 
 
 class Mobilemail():
-    def __init__(self,item,errcode,apitype,listener):
+    def __init__(self,item,apitype,errcode,lis_mobile):
         self.item = item
         self.errcode = errcode
         self.apitype = apitype
         self.url = conf.getConfig("mobile","url")
+        self.lis_mobile = lis_mobile
 
     def callmail(self):
-        recevier = receivers()
-        mobile = receiver.mobile
 
+        if self.item == "1":
+            code = "5"+str(self.apitype)+self.errcode+"000"
+        print code
 
+        policy = conf.getConfig("mobile", "policy")
+        templateId = conf.getConfig("mobile", "templateId")
+        postdata = {"code":code,"mobile":self.lis_mobile,"policy":policy,"templateId":templateId}
 
-
-
-
-
-semail = Momail(subject,content,type)
-semail.sendmail()
+        try:
+            request = Morequest(self.item,self.item,postdata)
+            print self.url
+            response =  request.json_post()
+            print "call you--------------------------------!"
+        except:
+            print "callmail error"
+#receiver = Contacts()
+#lis_mobile = receiver.get_mobile()
+#semail = Mobilemail("1","2","0",lis_mobile)
+#semail.callmail()
 
