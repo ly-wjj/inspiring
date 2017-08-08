@@ -18,8 +18,12 @@
           <option name="url" value="https://github.com/oysterclub/open-cmdb.git" />
           <option name="userName" value="" />
         </UrlAndUserName>
+        <UrlAndUserName>
+          <option name="url" value="https://code.tsign.cn/liya/devops" />
+          <option name="userName" value="" />
+        </UrlAndUserName>
       </list>
     </option>
-    <option name="cloneParentDir" value="D:\PycharmProjects" />
+    <option name="cloneParentDir" value="E:\code\devops" />
   </component>
 </application>
