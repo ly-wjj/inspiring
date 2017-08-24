@@ -4,6 +4,7 @@
       <mapping pattern="requirements" type="PLAIN_TEXT" />
       <mapping pattern="requirements.txt" type="PLAIN_TEXT" />
       <mapping ext="conf" type="PLAIN_TEXT" />
+      <mapping ext="in" type="PLAIN_TEXT" />
     </extensionMap>
   </component>
 </application>
